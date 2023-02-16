@@ -1,5 +1,7 @@
 import unittest
-from ../app/Point import Point
+import sys
+sys.path.append('../app')
+from Point import Point
 
 class Point_test(unittest.TestCase):
     def test_point_class_works(self):
