@@ -1,4 +1,4 @@
-from math import sqrt, acos, atan
+from math import sqrt, acos, atan, pi
 
 class Point():
     """2D Points"""
@@ -18,7 +18,10 @@ class Point():
     def polar_angle(self):
         """Angle of the vector that points to self
         with respect to the origin"""
-        return atan(self.y / self.x)
+        if(self.x != 0):
+            return atan(self.y / self.x)
+        else:
+            return 0.5 * pi
     
     def angle_between_segments(p1, p2, p3):
         """Angle between segments p2p1 and p2p3"""
