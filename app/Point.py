@@ -72,4 +72,15 @@ class Point():
         p0 = set_of_points[i]
         del set_of_points[i]
         set_of_points.sort(key = lambda x: (x - p0).polar_angle())
-        return set_of_points
+        
+        convex_hull = []
+        convex_hull.append(p0)
+        convex_hull.append(set_of_points[0])
+        convex_hull.append(set_of_points[1])
+        
+        for i in range(2, len(set_of_points)):
+            while(non_left_turn(convex_hull[-2], convex_hull[-1], set_of_points[i])):
+                convex_hull.pop()
+            convex_hull.append(set_of_points[i])
+        
+        return convex_hull
