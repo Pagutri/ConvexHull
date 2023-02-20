@@ -17,11 +17,17 @@ class Point():
 
     def polar_angle(self):
         """Angle of the vector that points to self
-        with respect to the origin"""
+        with respect to the origin. From 0 to pi
+        in order to be used in the graham scan
+        algorithm"""
         if(self.x != 0):
-            return atan(self.y / self.x)
+            angle = atan(self.y / self.x)
+            if(angle < 0):
+                angle = 0.5 * pi - angle
         else:
-            return 0.5 * pi
+            angle = 0.5 * pi
+        
+        return angle
     
     def angle_between_segments(p1, p2, p3):
         """Angle between segments p2p1 and p2p3"""
@@ -47,6 +53,12 @@ class Point():
 
         return index_of_min
 
+    def sort_by_angle(p0, set_of_points):
+        """Sort the set of points by polar angle
+        with respect to p0"""
+        set_of_points.sort(key = lambda x: (x - p0).polar_angle())
+        return set_of_points
+    
     def graham_scan(set_of_points):
         """Convex hull"""
         i = Point.min_y_coordinate(set_of_points)
