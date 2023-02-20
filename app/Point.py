@@ -23,7 +23,7 @@ class Point():
         if(self.x != 0):
             angle = atan(self.y / self.x)
             if(angle < 0):
-                angle = 0.5 * pi - angle
+                angle = pi + angle
         else:
             angle = 0.5 * pi
         
