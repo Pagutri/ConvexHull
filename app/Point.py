@@ -79,7 +79,7 @@ class Point():
         convex_hull.append(set_of_points[1])
         
         for i in range(2, len(set_of_points)):
-            while(non_left_turn(convex_hull[-2], convex_hull[-1], set_of_points[i])):
+            while(Point.non_left_turn(convex_hull[-2], convex_hull[-1], set_of_points[i])):
                 convex_hull.pop()
             convex_hull.append(set_of_points[i])
         
