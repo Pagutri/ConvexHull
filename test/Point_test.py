@@ -42,7 +42,7 @@ class Point_test(unittest.TestCase):
         set_of_points = [p4, p2, p1, p3, p5]
         self.assertEqual(4, Point.min_y_coordinate(set_of_points))
 
-    def test_graham_scan(self):
+    def test_sort_by_angle_method(self):
         p1 = Point(1.0, 3.0)
         p2 = Point(3.0, 3.0)
         p5 = Point(1.0, 1.0)
@@ -50,8 +50,9 @@ class Point_test(unittest.TestCase):
         p4 = Point(4.0, 2.0)
         p6 = Point(3.0, 2.0)
         p7 = Point(2.0, 4.0)
-        set_of_points = [p1, p2, p3, p4, p5, p6, p7]
-        new_set = Point.graham_scan(set_of_points)
+        p8 = Point(5.0, 3.0)
+        set_of_points = [p1, p2, p3, p4, p6, p7, p8]
+        new_set = Point.sort_by_angle(p5, set_of_points)
         for i in range(len(set_of_points)):
             print(set_of_points[i].x, set_of_points[i].y)
 
