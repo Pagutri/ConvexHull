@@ -55,6 +55,19 @@ class Point_test(unittest.TestCase):
         new_set = Point.sort_by_angle(p5, set_of_points)
         for i in range(len(set_of_points)):
             print(set_of_points[i].x, set_of_points[i].y)
+            
+    def test_non_left_turn(self):
+        p1 = Point(1.0, 3.0)
+        p2 = Point(3.0, 3.0)
+        p5 = Point(1.0, 1.0)
+        p3 = Point(0.0, 2.0)
+        p4 = Point(4.0, 2.0)
+        p6 = Point(3.0, 2.0)
+        p7 = Point(2.0, 4.0)
+        p8 = Point(5.0, 3.0)
+        self.assertEqual(False, Point.non_left_turn(p5, p4, p2))
+        self.assertEqual(True, Point.non_left_turn(p5, p6, p8))
+        self.assertEqual(True, Point.non_left_turn(p5, p2, p4))
 
 if __name__ == '__main__':
     unittest.main()

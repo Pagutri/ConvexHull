@@ -58,6 +58,13 @@ class Point():
         with respect to p0"""
         set_of_points.sort(key = lambda x: (x - p0).polar_angle())
         return set_of_points
+        
+    def non_left_turn(p0, p1, p2):
+        """Answer the question: if we walk along the
+        segment p0p1 and then along the segment p1p2,
+        is it true that we don't turn left?"""
+        cross_product = (p2-p0).x*(p1-p0).y - (p2-p0).y*(p1-p0).x
+        return cross_product >= 0
     
     def graham_scan(set_of_points):
         """Convex hull"""
