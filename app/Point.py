@@ -116,13 +116,17 @@ class Point():
 
         return index_of_max
 
+    def print_set_of_points(S):
+        for p in S:
+            print(p.x, p.y)    
+
     def farthest_point(S, P, Q):
         """The farthest point from segment PQ
         contained in set S"""
         max_p = Point.distance_point_segment(P, Q, S[0])
         index_of_max = 0
 
-        for i in range(len(S)):
+        for i in range(1, len(S)):
             if(Point.distance_point_segment(P, Q, S[i]) > max_p):
                 max_p = Point.distance_point_segment(P, Q, S[i])
                 index_of_max = i
@@ -132,33 +136,32 @@ class Point():
     def find_hull(CH, Sk, P, Q):
         if(Sk == []): # Set of points is empty
             return
-        i = Point.farthest_point(Sk, P, Q)
-        C = Sk[i]
-        Sk.pop(i)
-        S1 = [] # Points to the right of PC
-        S2 = [] # Points to the right of CQ
-        CH.append(C)
+        else:
+            i = Point.farthest_point(Sk, P, Q)
+            C = Sk[i]
+            Sk.pop(i)
+            S1 = [] # Points to the right of PC
+            S2 = [] # Points to the right of CQ
+            CH.append(C)
 
-        for p in Sk:
-            if(Point.non_left_turn(P, C, p)):
-                S1.append(p)
-            elif(Point.non_left_turn(C, Q, p)):
-                S2.append(p)
+            for p in Sk:
+                if(Point.non_left_turn(P, C, p)):
+                    S1.append(p)
+                elif(Point.non_left_turn(C, Q, p)):
+                    S2.append(p)
+            """
+            print("PC=", P.x, P.y, C.x, C.y)
+            print("Derecha PC")
+            Point.print_set_of_points(S1)
+            print("CQ=", C.x, C.y, Q.x, Q.y)
+            print("Derecha CQ")
+            Point.print_set_of_points(S2)#"""
 
-        print("PC=", P.x, P.y, C.x, C.y)
-        print("Derecha PC")
-        Point.print_set_of_points(S1)
-        print("CQ=", C.x, C.y, Q.x, Q.y)
-        print("Derecha CQ")
-        Point.print_set_of_points(S2)
-
-        Point.find_hull(CH, S1, P, C)
-        #CH.append(C)
-        Point.find_hull(CH, S2, C, Q)
+            Point.find_hull(CH, S1, P, C)
+            #CH.append(C)
+            Point.find_hull(CH, S2, C, Q)
+            return
         
-    def print_set_of_points(S):
-        for p in S:
-            print(p.x, p.y)
 
     def quick_hull(S):
         convex_hull = []
