@@ -84,3 +84,103 @@ class Point():
             convex_hull.append(set_of_points[i])
         
         return convex_hull
+
+    def distance_point_segment(s1, s2, p):
+        """Distance between segment s1s2 and point p"""
+        A = 1.0 / (s2.x - s1.x)
+        B = 1.0 / (s1.y - s2.y)
+        C = s1.x * s1.y / ((s1.x - s2.x) * (s2.y - s1.y))
+        numerator = abs(A * p.x + B * p.y + C)
+        denominator = sqrt(A**2 + B**2)
+        return numerator / denominator
+
+    def min_x_coordinate(set_of_points):
+        min_x = set_of_points[0].x
+        index_of_min = 0
+
+        for i in range(len(set_of_points)):
+            if(set_of_points[i].x < min_x):
+                min_x = set_of_points[i].x
+                index_of_min = i
+
+        return index_of_min
+
+    def max_x_coordinate(set_of_points):
+        max_x = set_of_points[0].x
+        index_of_max = 0
+
+        for i in range(len(set_of_points)):
+            if(set_of_points[i].x > max_x):
+                max_x = set_of_points[i].x
+                index_of_max = i
+
+        return index_of_max
+
+    def farthest_point(S, P, Q):
+        """The farthest point from segment PQ
+        contained in set S"""
+        max_p = Point.distance_point_segment(P, Q, S[0])
+        index_of_max = 0
+
+        for i in range(len(S)):
+            if(Point.distance_point_segment(P, Q, S[i]) > max_p):
+                max_p = Point.distance_point_segment(P, Q, S[i])
+                index_of_max = i
+
+        return index_of_max
+
+    def find_hull(CH, Sk, P, Q):
+        if(Sk == []): # Set of points is empty
+            return
+        i = Point.farthest_point(Sk, P, Q)
+        C = Sk[i]
+        Sk.pop(i)
+        S1 = [] # Points to the right of PC
+        S2 = [] # Points to the right of CQ
+        CH.append(C)
+
+        for p in Sk:
+            if(Point.non_left_turn(P, C, p)):
+                S1.append(p)
+            elif(Point.non_left_turn(C, Q, p)):
+                S2.append(p)
+
+        print("PC=", P.x, P.y, C.x, C.y)
+        print("Derecha PC")
+        Point.print_set_of_points(S1)
+        print("CQ=", C.x, C.y, Q.x, Q.y)
+        print("Derecha CQ")
+        Point.print_set_of_points(S2)
+
+        Point.find_hull(CH, S1, P, C)
+        #CH.append(C)
+        Point.find_hull(CH, S2, C, Q)
+        
+    def print_set_of_points(S):
+        for p in S:
+            print(p.x, p.y)
+
+    def quick_hull(S):
+        convex_hull = []
+        S1 = [] # Points to the right of AB
+        S2 = [] # Points to the left of AB
+        i = Point.min_x_coordinate(S)
+        A = S[i]
+        S.pop(i)
+        convex_hull.append(A)
+        i = Point.max_x_coordinate(S)
+        B = S[i]
+        S.pop(i)
+        convex_hull.append(B)
+
+        for p in S:
+            if(Point.non_left_turn(A, B, p)):
+                S1.append(p)
+            else:
+                S2.append(p)
+
+        Point.find_hull(convex_hull, S1, A, B)
+        #convex_hull.append(B)
+        Point.find_hull(convex_hull, S2, B, A)
+
+        return convex_hull
