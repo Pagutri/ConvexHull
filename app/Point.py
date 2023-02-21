@@ -89,7 +89,7 @@ class Point():
         """Distance between segment s1s2 and point p"""
         A = 1.0 / (s2.x - s1.x)
         B = 1.0 / (s1.y - s2.y)
-        C = s1.x * s1.y / ((s1.x - s2.x) * (s2.y - s1.y))
+        C = B*s1.y - A*s1.x
         numerator = abs(A * p.x + B * p.y + C)
         denominator = sqrt(A**2 + B**2)
         return numerator / denominator
